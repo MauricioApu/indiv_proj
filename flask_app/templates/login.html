@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" a href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <div class="container" id="login">
+        <h1 id="welcome">Welcome!</h1>
+            <fieldset>
+                <legend class="float-none w-auto">Login</legend>
+                    {% with messages = get_flashed_messages() %}     
+                        {% if messages %}                           
+                            {% for message in messages %}            
+                                {% if message == 'Invalid Email/Password' or message == 'You must be logged in!' %}
+                                    <p>{{message}}</p>                   
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+            <form action="/login" method="post" class="bg-dark">
+                <label for="email">Email:</label>
+                <input type="email" name="email"><br>
+                <label for="password">Password:</label>
+                <input type="password" name="password"><br>
+                <button type="submit">Login</button>
+            </form>
+            <a href="/signup">Don't have an account?</a>
+        </fieldset>
+    </div>
+</body>
+</html>

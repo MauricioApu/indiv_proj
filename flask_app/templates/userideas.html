@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{user}}'s ideas</title>
+    <link rel="stylesheet" a href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <div class="headerusr">
+        <h1>Hi {{user}}!</h1>
+        <a href="/bright_ideas" id="dashboard">Bright Ideas</a>
+        <a href="/logout" id="logout"><button type="submit">Logout</button></a>
+    </div>
+    {% if posts[0]['alias'].endswith('s')  %}
+    <h1 id="titleprof">{{posts[0]['alias']}}' ideas</h1>
+    {% else %}
+    <h1 id="titleprof">{{posts[0]['alias']}}'s ideas</h1>
+    {% endif %}
+    <div id="showusr">
+        {% for post in posts %}
+            <div class="idea">
+                <span id="prfidea">{{post.content}}</span> <br>
+                <span>Created on: {{post.created_at}}</span><br>
+                {% if post.likes == 1%}
+                <span>{{post.likes}} person liked this</span><br>
+                {% else %}
+                <span>{{post.likes}} people liked this</span><br>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

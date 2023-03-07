@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" a href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-light a1">
+    <div class="container" id="register">
+        <h1 id="welcome">Welcome!</h1>
+            <fieldset>
+                <legend class="float-none w-auto">Register</legend>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message != 'Invalid Email/Password' and message != 'You must be logged in!' %}
+                                <p>{{message}}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form action="/register" method="post">
+                    <label for="fname">First name:</label>
+                    <input type="text" name="name"><br>
+                    <label for="lname">Last name:</label>
+                    <input type="text" name="last_name"><br>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email"><br>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password"><br>
+                    <label for="conpassword">Confirm password:</label>
+                    <input type="password" name="conpassword"><br>
+                    <button type="submit">Register</button>
+                </form>
+                <a href="/signin">Already have an account?</a>
+            </fieldset>
+    </div>
+</body>
+</html> 

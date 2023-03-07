@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User profile</title>
+    <link rel="stylesheet" a href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <div class="headerusr">
+        <h1>Hi {{user}}!</h1>
+        <a href="/bright_ideas" id="dashboard">Bright Ideas</a>
+        <a href="/logout" id="logout"><button type="submit">Logout</button></a>
+    </div>
+    {% if data[0]['alias'].endswith('s')  %}
+    <h1 id="titleprof">{{data[0]['alias']}}' profile</h1>
+    {% else %}
+    <h1 id="titleprof">{{data[0]['alias']}}'s profile</h1>
+    {% endif %}
+    <div id="showusr">
+        <h2>Name: {{data[0]['name']}}</h2>
+        <h2>Last name: {{data[0]['last_name']}}</h2>
+        <h2>Email: {{data[0]['email']}}</h2>
+        {% if numposts[0]['count(p.id)'] == 0 %}
+        <h2>Total number of posts: 0</h2>
+        {% else %}
+        <a href="/users/{{data[0]['id']}}/posts"><h2>Total number of posts: {{numposts[0]['count(p.id)']}}</h2></a>
+        {% endif %}
+        <h2>Total number of likes: {{numlikes[0]['count(l.id)']}}</h2>
+    </div>
+</body>
+</html>

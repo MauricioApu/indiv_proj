@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bright Ideas</title>
+    <link rel="stylesheet" a href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <div class="header">
+        <h1>Hi {{user}}!</h1>
+        <a href="/users/{{session['user_id']}}" id="mypf">My profile</a>
+        <a href="/logout" id="logout"><button type="submit">Logout</button></a>
+        <form action="/post" method="post">
+            {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message != 'Invalid Email/Password' and message != 'You must be logged in!' %}
+                                <p>{{message}}</p>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            <input type="text" name="post" placeholder="Post something witty here...">
+            <button type="submit">Idea!</button>
+        </form>
+    </div>
+    <div class="feed">
+        {% for post in posts|sort(attribute='likes',reverse=true)%}
+        <div class="entry">
+            <h1><a href="/users/{{post.user_id}}">{{post.user_alias}} says:</a></h1> 
+            <div class="text">
+                {{post.content}}
+            </div>
+            {% if session['user_id'] == post.user_id %}
+            <div class="delete">
+                <a href="/delete/{{post.id}}">Delete</a>
+            </div>
+            {% endif %}
+
+            <div class="buttons">
+                <a href="/like/{{post.id}}"><button type="button">Like</button></a>
+                <a href="/dislike/{{post.id}}"><button type="button">Dislike</button></a>
+                {% if post.likes == 1%}
+                <span><a href="/posts/{{post.id}}">{{post.likes}} person</a> liked this</span>
+                {% else %}
+                <span><a href="/posts/{{post.id}}">{{post.likes}} people</a> liked this</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

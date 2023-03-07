@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post {{post[0]['id']}}</title>
+    <link rel="stylesheet" a href="{{ url_for('static', filename='css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-dark text-light">
+    <div class="headerusr">
+        <h1>Hi {{user}}!</h1>
+        <a href="/bright_ideas" id="dashboard">Bright Ideas</a>
+        <a href="/logout" id="logout"><button type="submit">Logout</button></a>
+    </div>
+    <div class="entry">
+        <h1><a href="/users/{{post[0]['user_id']}}">{{post[0]['alias']}} says:</a></h1> 
+        <div class="text">
+            {{post[0]['content']}}
+        </div>
+        {% if session['user_id'] == post[0]['user_id'] %}
+        <div class="delete">
+            <a href="/delete/{{post.id}}">Delete</a>
+        </div>
+        {% endif %}
+    <div class="likes">
+        <table>
+            <tr>
+                <th>Alias</th>
+                <th>Name</th>
+            </tr>
+            {% for user in likes %}  
+            <tr>
+                <td>{{user.alias}}</td>
+                <td>{{user.name}}  {{user.last_name}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+
+    </div>
+</body>
+</html>
